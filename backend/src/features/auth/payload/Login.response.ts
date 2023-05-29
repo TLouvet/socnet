@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ILoginResponse } from '../interfaces/LoginResponse.interface';
 
-export class LoginResponse implements ILoginResponse {
+export class LoginResponse {
   @ApiProperty()
   token: string;
 }

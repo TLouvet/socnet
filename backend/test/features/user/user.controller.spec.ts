@@ -5,9 +5,8 @@ import { User } from 'src/features/user/user.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from 'src/features/user/user.module';
-import { UserService } from 'src/features/user/user.service';
-import { AuthModule } from '../auth/auth.module';
-import exp from 'constants';
+import { AuthModule } from '../../../src/features/auth/auth.module';
+import { UserReponse } from '../../../src/features/user/dto/User.response';
 
 describe('User CRUD', () => {
   let app: INestApplication;
@@ -57,6 +56,18 @@ describe('User CRUD', () => {
     const users = JSON.parse(res.text);
     expect(users.length).toBe(1);
     expect(users[0]).not.toHaveProperty('password');
+  });
+
+  it('/GET user', async () => {
+    const usersResponse = await request(app.getHttpServer()).get('/user');
+    const user: UserReponse = JSON.parse(usersResponse.text)[0];
+
+    const res = await request(app.getHttpServer()).get(`/user/${user.id}`);
+    expect(res.status).toBe(200);
+
+    const userResponse = JSON.parse(res.text);
+    expect(userResponse).not.toHaveProperty('password');
+    expect(userResponse).toEqual(user);
   });
 
   it('/DELETE user', async () => {

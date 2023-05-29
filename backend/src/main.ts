@@ -1,9 +1,9 @@
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import helmet from 'helmet';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { AuthGuard } from './features/auth/auth.guard';
+import { JwtAuthGuard } from './features/auth/auth.guard';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -11,7 +11,7 @@ async function bootstrap() {
   app.use(helmet());
   app.enableCors();
   app.setGlobalPrefix('api');
-  app.useGlobalGuards(new AuthGuard());
+  app.useGlobalGuards(new JwtAuthGuard(new Reflector()));
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

@@ -3,22 +3,21 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import { UserReponse } from './dto/User.response';
-import { CreateUserDto } from './dto/CreateUserDto.dto';
-import { instanceToInstance } from 'class-transformer';
+import { RegisterRequestDto } from '../auth/payload/RegisterRequest.dto';
 
 @Injectable()
 export class UserService {
   constructor(@InjectRepository(User) private userRepository: Repository<User>) {}
 
-  async find() {
-    return instanceToInstance(await this.userRepository.find()) as UserReponse[];
+  find() {
+    return this.userRepository.find();
   }
 
   findOne(property: string, value: number | string) {
     return this.userRepository.findOneBy({ [`${property}`]: value });
   }
 
-  create(payload: CreateUserDto) {
+  create(payload: RegisterRequestDto) {
     return this.userRepository.save(payload);
   }
 

@@ -10,7 +10,7 @@ export class PasswordServiceImpl implements PasswordService {
     return hash;
   }
 
-  decode(password: string, hash: string): boolean {
+  compare(password: string, hash: string): boolean {
     return bcrypt.compareSync(password, hash);
   }
 }

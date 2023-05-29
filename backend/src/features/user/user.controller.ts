@@ -10,7 +10,7 @@ import {
 import { UserService } from './user.service';
 import { User } from './user.entity';
 import { UserReponse } from './dto/User.response';
-import { CreateUserDto } from './dto/CreateUserDto.dto';
+import { instanceToInstance } from 'class-transformer';
 
 @Controller('user')
 @ApiTags('user')
@@ -22,13 +22,13 @@ export class UserController {
   @Get('/')
   @ApiOkResponse({ type: UserReponse, isArray: true })
   find(): Promise<UserReponse[]> {
-    return this.userService.find();
+    return instanceToInstance(this.userService.find());
   }
 
   @Get('/:id')
   @ApiOkResponse({ type: UserReponse })
   findOne(@Param('id') id: number): Promise<UserReponse> {
-    return this.userService.findOne('id', id);
+    return instanceToInstance(this.userService.findOne('id', id));
   }
 
   @Patch('/:id')

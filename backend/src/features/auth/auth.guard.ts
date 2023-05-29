@@ -1,27 +1,24 @@
-import { CanActivate, Injectable, ExecutionContext, UnauthorizedException } from '@nestjs/common';
+import { Injectable, ExecutionContext } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { Reflector } from '@nestjs/core';
+import { IS_PUBLIC_KEY } from 'src/common/decorators/IsPublic.decorator';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class JwtAuthGuard extends AuthGuard('jwt') {
+  constructor(private reflector: Reflector) {
+    super();
+  }
+
   canActivate(context: ExecutionContext) {
-    const request = context.switchToHttp().getRequest();
-    if (this.isPublicRoute(request.url) || this.getAuthorizationToken(request)) {
+    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+
+    if (isPublic) {
       return true;
     }
 
-    throw new UnauthorizedException();
-  }
-
-  private getAuthorizationToken(request) {
-    const authHeader = request.headers.authorization;
-    if (!authHeader) {
-      return false;
-    }
-
-    return true;
-  }
-
-  private isPublicRoute(requestUrl: string) {
-    const PUBLIC_ROUTES = ['/api/auth'];
-    return PUBLIC_ROUTES.some((route) => requestUrl.startsWith(route));
+    return super.canActivate(context);
   }
 }
