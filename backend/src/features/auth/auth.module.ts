@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AuthServiceImpl } from './service/auth.service';
 import { AuthController } from './auth.controller';
-import { PasswordServiceImpl } from './service/PasswordServiceImpl.service';
+import { BCryptPasswordServiceImpl } from './service/PasswordServiceImpl.service';
 import { UserModule } from '../user/user.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -26,7 +26,7 @@ import { JwtStrategy } from './auth.strategy';
     },
     {
       provide: 'PasswordService',
-      useClass: PasswordServiceImpl,
+      useClass: BCryptPasswordServiceImpl,
     },
     JwtStrategy,
   ],

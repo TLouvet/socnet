@@ -3,7 +3,7 @@ import * as bcrypt from 'bcrypt';
 import { PasswordService } from '../interfaces/PasswordEncoder.interface';
 
 @Injectable()
-export class PasswordServiceImpl implements PasswordService {
+export class BCryptPasswordServiceImpl implements PasswordService {
   encode(password: string): string {
     const saltOrRounds = 10;
     const hash = bcrypt.hashSync(password, saltOrRounds);

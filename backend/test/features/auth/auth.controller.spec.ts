@@ -99,6 +99,5 @@ describe('Auth', () => {
     expect(await userService.find()).toHaveLength(0);
 
     await app.close();
-    console.log('App closed from auth.controller.spec.ts');
   });
 });

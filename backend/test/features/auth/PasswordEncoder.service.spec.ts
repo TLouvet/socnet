@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PasswordServiceImpl } from '../../../src/features/auth/service/PasswordServiceImpl.service';
+import { BCryptPasswordServiceImpl } from '../../../src/features/auth/service/PasswordServiceImpl.service';
 
 describe('PasswordServiceImpl', () => {
-  let service: PasswordServiceImpl;
+  let service: BCryptPasswordServiceImpl;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [PasswordServiceImpl],
+      providers: [BCryptPasswordServiceImpl],
     }).compile();
 
-    service = module.get<PasswordServiceImpl>(PasswordServiceImpl);
+    service = module.get<BCryptPasswordServiceImpl>(BCryptPasswordServiceImpl);
   });
 
   it('should be defined', () => {

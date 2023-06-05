@@ -70,6 +70,15 @@ describe('User CRUD', () => {
     expect(userResponse).toEqual(user);
   });
 
+  it('/PATCH user', () => {
+    return request(app.getHttpServer())
+      .patch('/user/1')
+      .send({
+        email: 'newemail@test.com',
+      })
+      .expect(200);
+  });
+
   it('/DELETE user', async () => {
     const res = await request(app.getHttpServer()).get('/user').expect(200);
     const users = JSON.parse(res.text);
@@ -88,6 +97,5 @@ describe('User CRUD', () => {
 
   afterAll(async () => {
     await app.close();
-    console.log('App closed from user.controller.spec.ts');
   });
 });

@@ -29,18 +29,14 @@ export class AuthServiceImpl implements AuthService {
   }
 
   async register(registerDto: RegisterRequestDto): Promise<string> {
-    const user = await this.userService.findOne('email', registerDto.email);
-
-    if (user) {
+    try {
+      await this.userService.create({
+        email: registerDto.email,
+        password: this.passwordService.encode(registerDto.password),
+      });
+    } catch (e) {
       throw new BadRequestException();
     }
-
-    const hashedPassword = this.passwordService.encode(registerDto.password);
-
-    await this.userService.create({
-      email: registerDto.email,
-      password: hashedPassword,
-    });
 
     return 'This action returns a token';
   }
