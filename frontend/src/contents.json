@@ -1,0 +1,9 @@
+{
+  "fr": {
+    "errors": {
+      "email_invalid": "L'adresse email est invalide",
+      "email_required": "L'adresse email est obligatoire",
+      "password_required": "Le mot de passe est obligatoire"
+    }
+  }
+}

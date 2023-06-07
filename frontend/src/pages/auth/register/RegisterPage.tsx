@@ -1,14 +1,14 @@
-import { LoginForm } from "../../../components/auth/LoginForm/LoginForm";
 import { Link } from "react-router-dom";
 import { Typography } from "@mui/material";
 import { AuthLayout } from "../../../components/auth/AuthLayout";
+import { RegisterForm } from "../../../components/auth/RegisterForm/RegisterForm";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   return (
     <AuthLayout>
-      <LoginForm />
+      <RegisterForm />
       <Typography variant="body1" mt={3}>
-        Don't have an account? <Link to="/register">Register</Link>
+        Already have an account? <Link to="/login">Login</Link>
       </Typography>
     </AuthLayout>
   );
